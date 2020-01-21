@@ -3,7 +3,7 @@ version: "3.7"
 
 services:
   sonarqube:
-    image: teecke/gp-sonarqube:0.1.0
+    image: teecke/gp-sonarqube:0.2.0
     expose:
       - 9000
     ports:
