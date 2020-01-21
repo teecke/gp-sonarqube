@@ -42,11 +42,22 @@ The service is formed by two containers:
 
 4. Create a docker network called "platform_services" before start the services with `docker network create platform_services`.
 
-5. Create the following data directories to store the SonarQube config assets:
+5. Install assets
 
     ```console
-    $ mkdir -p data/conf data/data data/extensions data/bundled-plugins
-    $ chmod 777 data data/*
+    $ devcontrol assets-install
+    Generic Platform - SonarQube Service (c) Teecke 2020
+
+    - Creating 'data' directory...[OK]
+    - Setting 'data' permissions...[OK]
+    - Creating 'data/conf' directory...[OK]
+    - Setting 'data/conf' permissions...[OK]
+    - Creating 'data/data' directory...[OK]
+    - Setting 'data/data' permissions...[OK]
+    - Creating 'data/extensions' directory...[OK]
+    - Setting 'data/extensions' permissions...[OK]
+    - Creating 'data/bundled-plugins' directory...[OK]
+    - Setting 'data/bundled-plugins' permissions...[OK]
     ```
 
 6. Start with `docker-compose up -d`.

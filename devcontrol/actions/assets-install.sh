@@ -17,14 +17,15 @@ function run-bash-linter() {
     local briefMessage
     local helpMessage
 
-    briefMessage="Run bash linter"
+    briefMessage="Install assets"
     helpMessage=$(cat <<EOF
-Run shellckheck test over the following scripts:
+Install SonarQube assets. It will create the following directories with all permissions (777)
 
-* devcontrol/actions/*.sh
-* devcontrol/global/*.sh
-* */backup
-* */cleanup
+* data/conf
+* data/data
+* data/extensions
+* data/bundled-plugins
+
 EOF
 )
 
@@ -37,19 +38,18 @@ EOF
             showHelpMessage "${FUNCNAME[0]}" "$helpMessage"
             ;;
         exec)
-            exitCode=0
-            for file in devcontrol/actions/*.sh devcontrol/global/*.sh */backup */cleanup; do
-                echo -n "Running shellcheck bash linter over ${file}..."
-                failed=0
-                docker run --network none -i --rm --workdir /workspace -v "$(pwd)":/workspace koalaman/shellcheck-alpine shellcheck -x "${file}" || failed=1
-                if [ ${failed} -eq 0 ]; then
+            for directory in data data/conf data/data data/extensions data/bundled-plugins; do
+                if [ ! -d ${directory} ]; then
+                    echo -n "- Creating '${directory}' directory..."
+                    mkdir ${directory}
+                    echo "[OK]"
+                    echo -n "- Setting '${directory}' permissions..."
+                    chmod 777 ${directory}
                     echo "[OK]"
                 else
-                    echo "-----> Test failed"
-                    exitCode=$((exitCode + 1))
+                    echo "The '${directory}' directory already exists, skipping"
                 fi
             done
-            exit ${exitCode}
             ;;
         *)
             showNotImplemtedMessage "$1" "${FUNCNAME[0]}"
