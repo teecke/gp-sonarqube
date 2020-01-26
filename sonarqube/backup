@@ -1,9 +1,12 @@
 #!/bin/bash
-mkdir -p /var/backups/gp/sonarqube/data/conf \
-         /var/backups/gp/sonarqube/data/data \
-         /var/backups/gp/sonarqube/data/extensions \
-         /var/backups/gp/sonarqube/data/bundled-plugins \
-rsync -a --delete /opt/sonarqube/conf                   /var/backups/gp/sonarqube/data/conf
-rsync -a --delete /opt/sonarqube/data                   /var/backups/gp/sonarqube/data/data
-rsync -a --delete /opt/sonarqube/extensions             /var/backups/gp/sonarqube/data/extensions
-rsync -a --delete /opt/sonarqube/lib/bundled-plugins    /var/backups/gp/sonarqube/data/bundled-plugins
+
+set -eu
+
+mkdir -p /var/backups/gp/sonarqube/conf \
+         /var/backups/gp/sonarqube/data \
+         /var/backups/gp/sonarqube/extensions \
+         /var/backups/gp/sonarqube/lib/bundled-plugins
+rsync -a --delete /opt/sonarqube/conf/                   /var/backups/gp/sonarqube/conf/
+rsync -a --delete /opt/sonarqube/data/                   /var/backups/gp/sonarqube/data/
+rsync -a --delete /opt/sonarqube/extensions/             /var/backups/gp/sonarqube/extensions/
+rsync -a --delete /opt/sonarqube/lib/bundled-plugins/    /var/backups/gp/sonarqube/lib/bundled-plugins/

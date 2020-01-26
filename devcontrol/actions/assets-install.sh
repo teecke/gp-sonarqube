@@ -1,17 +1,19 @@
 #!/bin/bash
 
-# @description Run bash linter
+set -eu
+
+# @description Install item assets
 #
 # @example
-#   run-bash-linter
+#   assets-install
 #
 # @arg $1 Task: "brief", "help" or "exec"
 #
-# @exitcode The result of the shellckeck
+# @exitcode The result of the assets installation
 #
 # @stdout "Not implemented" message if the requested task is not implemented
 #
-function run-bash-linter() {
+function assets-install() {
 
     # Init
     local briefMessage
@@ -21,10 +23,8 @@ function run-bash-linter() {
     helpMessage=$(cat <<EOF
 Install SonarQube assets. It will create the following directories with all permissions (777)
 
-* data/conf
-* data/data
-* data/extensions
-* data/bundled-plugins
+* Create the "data/opt/sonarqube/conf", "data/opt/sonarqube/data", "data/opt/sonarqube/extensions" and "/opt/sonarqube/lib/bundled-plugins" directories with all permissions (777)
+* Create the network "platform_services"
 
 EOF
 )
@@ -38,7 +38,21 @@ EOF
             showHelpMessage "${FUNCNAME[0]}" "$helpMessage"
             ;;
         exec)
-            for directory in data data/conf data/data data/extensions data/bundled-plugins; do
+            # Create network
+            if [ "$(docker network ls -f name='platform_products' -q)" == "" ]; then
+                echo -n "- Creating docker network 'platform_products' ..."
+                docker network create platform_products
+                echo "[OK]"
+            else
+                echo "The 'platform_services' docker network already exists, skipping"
+            fi
+            # Create directories
+            for directory in data data/opt data/opt/sonarqube \
+                             data/opt/sonarqube/conf \
+                             data/opt/sonarqube/data \
+                             data/opt/sonarqube/extensions \
+                             data/opt/sonarqube/lib data/opt/sonarqube/lib/bundled-plugins
+            do
                 if [ ! -d ${directory} ]; then
                     echo -n "- Creating '${directory}' directory..."
                     mkdir ${directory}
@@ -58,4 +72,4 @@ EOF
 }
 
 # Main
-run-bash-linter "$@"
+assets-install "$@"
