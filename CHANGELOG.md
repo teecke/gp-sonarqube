@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.3.0 (2020-01-26)
+
+### Upgrade
+
+* Service refactor with assets install ([644935f](https://github.com/teecke/gp-sonarqube/commit/644935f))
+
+### Build
+
+* Update Auto Release Log adding v0.3.0 info with JPL ([7f23177](https://github.com/teecke/gp-sonarqube/commit/7f23177))
+
+### Docs
+
+* Generate v0.2.0 changelog with JPL ([66d2de1](https://github.com/teecke/gp-sonarqube/commit/66d2de1))
+
 ## v0.2.0 (2020-01-21)
 
 ### New
