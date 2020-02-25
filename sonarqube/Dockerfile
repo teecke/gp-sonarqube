@@ -14,5 +14,8 @@ RUN apt-get update && \
 COPY backup /usr/local/bin/backup
 COPY cleanup /usr/local/bin/cleanup
 
+# GP service identification
+RUN echo "sonarqube" > /gp.service
+
 # Back to sonarqube user
 USER sonarqube
