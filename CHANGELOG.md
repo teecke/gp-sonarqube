@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.3.1 (2020-02-25)
+
+### Update
+
+* Use next image tag in docker-compose file ([d91dcb5](https://github.com/teecke/gp-sonarqube/commit/d91dcb5))
+* Add GP service identification in the image ([bdb6abe](https://github.com/teecke/gp-sonarqube/commit/bdb6abe))
+
+### Build
+
+* Update Auto Release Log adding v0.3.1 info with JPL ([fb78523](https://github.com/teecke/gp-sonarqube/commit/fb78523))
+* Use a more generig gp pipeline ([531e713](https://github.com/teecke/gp-sonarqube/commit/531e713))
+
+### Docs
+
+* Generate v0.3.0 changelog with JPL ([3246945](https://github.com/teecke/gp-sonarqube/commit/3246945))
+
 ## v0.3.0 (2020-01-26)
 
 ### Upgrade
