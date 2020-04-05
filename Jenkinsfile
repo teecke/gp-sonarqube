@@ -5,11 +5,16 @@
 // Initialize global config
 cfg = jplConfig('gp-sonarqube', 'docker', '', [email: env.CITEECKE_NOTIFY_EMAIL_TARGETS])
 
-def publishDockerImage(nextReleaseNumber = "") {
+/**
+ * Build and publish docker images
+ *
+ * @param nextReleaseNumber String Release number to be used as tag
+ */
+def buildAndPublishDockerImage(nextReleaseNumber = "") {
     if (nextReleaseNumber == "") {
         nextReleaseNumber = sh (script: "kd get-next-release-number .", returnStdout: true).trim().substring(1)
     }
-    docker.withRegistry("https://registry.hub.docker.com", 'teeckebot-docker-credentials') {
+    docker.withRegistry("", 'teeckebot-docker-credentials') {
         def customImage = docker.build("teecke/${cfg.projectName}:${nextReleaseNumber}", "--pull --no-cache ${cfg.projectName.substring(3)}")
         customImage.push()
         if (nextReleaseNumber != "beta") {
@@ -29,23 +34,18 @@ pipeline {
         }
         stage ('Bash linter') {
             steps {
-                script {
-                    sh 'devcontrol run-bash-linter'
-                }
+                sh 'devcontrol run-bash-linter'
             }
         }
         stage ('Build') {
-            agent { label 'docker' }
             steps {
-                script {
-                    publishDockerImage("beta")
-                }
+                buildAndPublishDockerImage("beta")
             }
         }
         stage ('Make release') {
             when { branch 'release/new' }
             steps {
-                publishDockerImage()
+                buildAndPublishDockerImage()
                 jplMakeRelease(cfg, true)
             }
         }
