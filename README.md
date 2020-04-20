@@ -1,6 +1,6 @@
 # DEPRECATED
 
-Please visit https://github.com/tpbtools/gp-sonarqube
+Please visit https://github.com/ayudadigital/gp-sonarqube
 
 # Generic Platform - Sonar Service
 
